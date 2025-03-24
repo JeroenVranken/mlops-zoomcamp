@@ -1,0 +1,15 @@
+artifact_uri: file:///workspaces/mlops-zoomcamp/02-experiment-tracking/mlruns/613242226504563840/24e2b42a7f334b54a4649ac4470ee981/artifacts
+end_time: 1742819084793
+entry_point_name: ''
+experiment_id: '613242226504563840'
+lifecycle_stage: active
+run_id: 24e2b42a7f334b54a4649ac4470ee981
+run_name: useful-asp-635
+run_uuid: 24e2b42a7f334b54a4649ac4470ee981
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1742819057962
+status: 3
+tags: []
+user_id: codespace
