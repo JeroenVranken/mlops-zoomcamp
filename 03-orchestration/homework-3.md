@@ -43,7 +43,7 @@ How many records did we load?
 - 3,603,766
 
 
-> There are **3403766* rows.
+> There are **3403766** rows.
 
 ## Question 4. Data preparation
 
@@ -100,6 +100,9 @@ Hint: print the `intercept_` field in the code block
 - 24.77
 - 27.77
 - 31.77
+
+> The intercept is: **24.774419321244913**
+
 
 ## Question 6. Register the model 
 
@@ -165,6 +168,11 @@ Find the logged model, and find MLModel file. What's the size of the model? (`mo
 * 1,534
 
 > Note: typically we do last two steps in one code block.
+
+> [ANSWER] After logging, we get model_size_bytes: **4534**
+
+
+
 
 
 ## Submit the results
