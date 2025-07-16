@@ -41,21 +41,32 @@ def read_data(filename, categorical):
             }
         }
 
-        df = pd.read_parquet('s3://bucket/file.parquet', storage_options=options)
+        df = pd.read_parquet(f's3://nyc-duration/{filename}', storage_options=options)
     else:
         df = pd.read_parquet(filename)
 
-    df_prepped = prepare_data(df, categorical)
+    return df
 
-    df_prepped.to_parquet(
-        input_file,
-        engine='pyarrow',
-        compression=None,
-        index=False,
-        storage_options=options
-    )
+def save_data(df, output_file):
+    S3_ENDPOINT_URL = os.getenv('S3_ENDPOINT_URL', None)
+    
+    if S3_ENDPOINT_URL:
+        options = {
+            'client_kwargs': {
+                'endpoint_url': S3_ENDPOINT_URL
+            }
+        }
 
-    return df_prepped
+        df.to_parquet(
+            f's3://nyc-duration/{output_file}',
+            engine='pyarrow',
+            compression=None,
+            index=False,
+            storage_options=options
+        )   
+    else:
+        print("S3_ENDPOINT_URL not set, saving to local file")
+        df.to_parquet(f'output/{output_file}', engine='pyarrow', index=False)
 
 
 def main(year, month):
@@ -69,6 +80,9 @@ def main(year, month):
     input_file = get_input_path(year, month)
     output_file = get_output_path(year, month)
 
+    input_file = 'file.parquet'
+    output_file = get_output_path(year, month)
+    
 
     with open('model.bin', 'rb') as f_in:
         dv, lr = pickle.load(f_in)
@@ -93,9 +107,7 @@ def main(year, month):
     df_result['ride_id'] = df['ride_id']
     df_result['predicted_duration'] = y_pred
 
-
-    df_result.to_parquet(output_file, engine='pyarrow', index=False)
-
+    df_result.to_parquet(output_file, index=False)
 
 if __name__=="__main__":
     main(sys.argv[1], sys.argv[2])
