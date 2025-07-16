@@ -10,6 +10,8 @@ def dt(hour, minute, second=0):
 
 
 def test_s3():
+
+    # create fake dataframe
     data = [
         (None, None, dt(1, 1), dt(1, 10)),
         (1, 1, dt(1, 2), dt(1, 10)),
@@ -22,27 +24,20 @@ def test_s3():
 
     df_prepped = batch.prepare_data(df, columns)
 
-    S3_ENDPOINT_URL = os.getenv('S3_ENDPOINT_URL', None)
-    
-    if S3_ENDPOINT_URL:
-        options = {
-            'client_kwargs': {
-                'endpoint_url': S3_ENDPOINT_URL
-            }
-        }
+    # save to s3
+    output_file = 'file.parquet'
+    batch.save_data(df_prepped, output_file)
 
-        # df = pd.read_parquet('s3://bucket/file.parquet', storage_options=options)
+    # Load from S3
+    df_from_s3 = batch.read_data(output_file, columns)
 
-        df_prepped.to_parquet(
-            's3://nyc-duration/file.parquet',
-            engine='pyarrow',
-            compression=None,
-            index=False,
-            storage_options=options
-        )   
-    else:
-        print("S3_ENDPOINT_URL not set, reading from local file")
-        # df = pd.read_parquet(filename)
 
+    # Check if the data was saved and loaded correctly
+    assert df_from_s3.shape == (2, 5)
+
+
+# Q5: Verify that data was written correctly using:
+# aws s3 ls s3://nyc-duration --endpoint-url http://localhost:4566 --human-readable
+# The size of the file is 3.5 KiB =± 3620
 
     
