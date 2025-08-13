@@ -31,11 +31,17 @@ jobs:
       #     python -m pip install pip==21.3.1
       #     pip install setuptools==57.5.0
       #     pip install pipenv      
+      - name: Install pipenv
+        run: pip install pipenv
 
       - name: Install dependencies
         working-directory: "06-best-practices/B_Infrastructure_as_code/code"
-        run: pip install pipenv && pipenv install --dev
-      
+        run: |
+          # Remove any existing virtualenv to avoid cached Python 3.12 builds
+          pipenv --rm || true
+          # Ensure Pipenv creates venv for Python 3.9
+          pipenv install --dev --deploy --ignore-pipfile --python 3.9
+
       - name: Run Unit tests
         working-directory: "06-best-practices/B_Infrastructure_as_code/code"
         run: pipenv run pytest tests/
