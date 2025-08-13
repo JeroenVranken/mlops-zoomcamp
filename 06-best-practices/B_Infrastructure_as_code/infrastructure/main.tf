@@ -5,7 +5,6 @@ terraform {
         key     = "mlops-zoomcamp.tfstate"
         region  = "eu-west-3"
         encrypt = true
-        
       
     }
 }
