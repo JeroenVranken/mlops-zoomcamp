@@ -5,7 +5,6 @@ terraform {
         key     = "mlops-zoomcamp.tfstate"
         region  = "eu-west-3"
         encrypt = true
-        
       
     }
 }
@@ -66,4 +65,23 @@ module "lambda_function" {
     output_stream_arn = module.output_kinesis_stream.stream_arn
     source_stream_name = "${var.source_stream_name}_${var.project_id}"
     source_stream_arn = module.source_kinesis_stream.stream_arn
+}
+
+
+
+# For CI/CD
+output "lambda_function" {
+  value     = "${var.lambda_function_name}_${var.project_id}"
+}
+
+output "model_bucket" {
+  value = module.s3_bucket.name
+}
+
+output "predictions_stream_name" {
+  value     = "${var.output_stream_name}-${var.project_id}"
+}
+
+output "ecr_repo" {
+  value = "${var.ecr_repo_name}_${var.project_id}"
 }

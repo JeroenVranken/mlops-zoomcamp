@@ -9,7 +9,7 @@ on:
 
 
 env:
-  AWS_DEFAULT_REGION: 'eu-west-1'
+  AWS_DEFAULT_REGION: 'eu-west-3'
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
@@ -19,14 +19,29 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Set up Python 3.9
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v5
         with:
           python-version: 3.9
 
+      - name: Ensure build tools
+        run: |
+            python -m ensurepip --upgrade
+            python -m pip install --upgrade setuptools
+      
+      #     python -m pip install pip==21.3.1
+      #     pip install setuptools==57.5.0
+      #     pip install pipenv      
+      - name: Install pipenv
+        run: pip install pipenv
+
       - name: Install dependencies
         working-directory: "06-best-practices/B_Infrastructure_as_code/code"
-        run: pip install pipenv && pipenv install --dev
-      
+        run: |
+          # Remove any existing virtualenv to avoid cached Python 3.12 builds
+          pipenv --rm || true
+          # Ensure Pipenv creates venv for Python 3.9
+          pipenv install --dev --deploy --python 3.9
+
       - name: Run Unit tests
         working-directory: "06-best-practices/B_Infrastructure_as_code/code"
         run: pipenv run pytest tests/
