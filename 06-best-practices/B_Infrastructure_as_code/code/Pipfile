@@ -9,6 +9,7 @@ mlflow = "==2.12.1"
 scikit-learn = "==1.0.2"
 opentelemetry-api = "*"
 opentelemetry-sdk = "*"
+setuptools = "==57.5.0"
 
 [dev-packages]
 pytest = "*"
