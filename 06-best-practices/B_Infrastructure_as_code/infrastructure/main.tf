@@ -66,3 +66,5 @@ module "lambda_function" {
     source_stream_name = "${var.source_stream_name}_${var.project_id}"
     source_stream_arn = module.source_kinesis_stream.stream_arn
 }
+
+#
