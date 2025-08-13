@@ -21,6 +21,11 @@ variable "docker_image_local_path" {
     description = "Local path to Dockerfile"
 }
 
+variable "pipfile_lock_local_path" {
+    type        = string
+    description = "Local path to Pipfile.lock"
+}
+
 variable "region" {
     type        = string
     description = "region"

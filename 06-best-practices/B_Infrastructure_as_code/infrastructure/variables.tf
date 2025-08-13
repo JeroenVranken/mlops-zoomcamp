@@ -29,6 +29,11 @@ variable "docker_image_local_path" {
   description = ""
 }
 
+variable "pipfile_lock_local_path" {
+  description = ""
+}
+
+
 variable "ecr_repo_name" {
   description = ""
 }

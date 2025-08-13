@@ -5,8 +5,10 @@ name = "pypi"
 
 [packages]
 boto3 = "*"
-mlflow = "*"
+mlflow = "==2.12.1"
 scikit-learn = "==1.0.2"
+opentelemetry-api = "*"
+opentelemetry-sdk = "*"
 
 [dev-packages]
 pytest = "*"
@@ -15,6 +17,3 @@ pylint = "==2.14.4"
 black = "*"
 isort = "*"
 pre-commit = "*"
-
-[requires]
-python_version = "3.9"

@@ -12,6 +12,7 @@ resource null_resource ecr_image {
     triggers = {
         python_file = md5(file(var.lambda_function_local_path))
         docker_file = md5(file(var.docker_image_local_path))
+        pipfile = md5(file(var.pipfile_lock_local_path))
     }
 
     provisioner "local-exec" {

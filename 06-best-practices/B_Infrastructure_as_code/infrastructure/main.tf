@@ -52,6 +52,7 @@ module "ecr_image" {
     account_id = local.account_id
     lambda_function_local_path = var.lambda_function_local_path
     docker_image_local_path = var.docker_image_local_path
+    pipfile_lock_local_path = var.pipfile_lock_local_path
     region = var.aws_region
     
 }
