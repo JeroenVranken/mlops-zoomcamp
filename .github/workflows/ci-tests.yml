@@ -23,11 +23,14 @@ jobs:
         with:
           python-version: 3.9
 
-      # - name: Ensure build tools
-      #   run: |
+      - name: Ensure build tools
+        run: |
+            python -m ensurepip --upgrade
+            python -m pip install --upgrade setuptools
+      
       #     python -m pip install pip==21.3.1
       #     pip install setuptools==57.5.0
-      #     pip install pipenv
+      #     pip install pipenv      
 
       - name: Install dependencies
         working-directory: "06-best-practices/B_Infrastructure_as_code/code"
