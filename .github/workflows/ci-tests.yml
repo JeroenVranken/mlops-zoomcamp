@@ -40,7 +40,7 @@ jobs:
           # Remove any existing virtualenv to avoid cached Python 3.12 builds
           pipenv --rm || true
           # Ensure Pipenv creates venv for Python 3.9
-          pipenv install --dev --deploy --ignore-pipfile --python 3.9
+          pipenv install --dev --deploy --python 3.9
 
       - name: Run Unit tests
         working-directory: "06-best-practices/B_Infrastructure_as_code/code"
